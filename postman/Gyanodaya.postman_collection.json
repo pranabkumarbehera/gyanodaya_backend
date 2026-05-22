@@ -1,0 +1,527 @@
+{
+  "info": {
+    "name": "Gyanodaya EdTech API",
+    "_postman_id": "c1b7f13d-6fa1-4ca5-b4ba-5c8c2fe0d001",
+    "description": "Postman collection for the Gyanodaya backend running locally on port 5002.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5002/api/v1" },
+    { "key": "accessToken", "value": "" },
+    { "key": "refreshToken", "value": "" },
+    { "key": "teacherId", "value": "" },
+    { "key": "courseId", "value": "" },
+    { "key": "mockTestId", "value": "" },
+    { "key": "sessionId", "value": "" },
+    { "key": "questionId", "value": "" },
+    { "key": "userId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:5002/health", "host": ["http://localhost:5002"], "path": ["health"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Aarav\",\n  \"lastName\": \"Reddy\",\n  \"email\": \"aarav@example.com\",\n  \"password\": \"password123\",\n  \"gender\": \"male\",\n  \"role\": \"student\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/register", "host": ["{{baseUrl}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"aarav@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "Google Sign-In",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idToken\": \"GOOGLE_ID_TOKEN\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/google-signin", "host": ["{{baseUrl}}"], "path": ["auth", "google-signin"] }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"aarav@example.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/forgot-password", "host": ["{{baseUrl}}"], "path": ["auth", "forgot-password"] }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"aarav@example.com\",\n  \"otp\": \"123456\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/verify-otp", "host": ["{{baseUrl}}"], "path": ["auth", "verify-otp"] }
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"aarav@example.com\",\n  \"newPassword\": \"newpassword123\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/reset-password", "host": ["{{baseUrl}}"], "path": ["auth", "reset-password"] }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/refresh-token", "host": ["{{baseUrl}}"], "path": ["auth", "refresh-token"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/users/profile", "host": ["{{baseUrl}}"], "path": ["users", "profile"] }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Aarav Updated\",\n  \"gender\": \"male\"\n}" },
+            "url": { "raw": "{{baseUrl}}/users/profile", "host": ["{{baseUrl}}"], "path": ["users", "profile"] }
+          }
+        },
+        {
+          "name": "Upload Profile Image",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "profileImage", "type": "file", "src": "" }]
+            },
+            "url": { "raw": "{{baseUrl}}/users/profile/image", "host": ["{{baseUrl}}"], "path": ["users", "profile", "image"] }
+          }
+        },
+        {
+          "name": "Get Statistics",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/users/statistics", "host": ["{{baseUrl}}"], "path": ["users", "statistics"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teachers",
+      "item": [
+        {
+          "name": "Teacher List",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/teachers?search=math&page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["teachers"], "query": [{ "key": "search", "value": "math" }, { "key": "page", "value": "1" }, { "key": "limit", "value": "10" }] }
+          }
+        },
+        {
+          "name": "Teacher Details",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/teachers/{{teacherId}}", "host": ["{{baseUrl}}"], "path": ["teachers", "{{teacherId}}"] }
+          }
+        },
+        {
+          "name": "Teacher Courses",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/teachers/{{teacherId}}/courses", "host": ["{{baseUrl}}"], "path": ["teachers", "{{teacherId}}", "courses"] }
+          }
+        },
+        {
+          "name": "Teacher Ratings",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/teachers/{{teacherId}}/ratings", "host": ["{{baseUrl}}"], "path": ["teachers", "{{teacherId}}", "ratings"] }
+          }
+        },
+        {
+          "name": "Follow Teacher",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/teachers/{{teacherId}}/follow", "host": ["{{baseUrl}}"], "path": ["teachers", "{{teacherId}}", "follow"] }
+          }
+        },
+        {
+          "name": "Rate Teacher",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"rating\": 4.5\n}" },
+            "url": { "raw": "{{baseUrl}}/teachers/{{teacherId}}/ratings", "host": ["{{baseUrl}}"], "path": ["teachers", "{{teacherId}}", "ratings"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Course List",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/courses?search=physics&page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["courses"], "query": [{ "key": "search", "value": "physics" }, { "key": "page", "value": "1" }, { "key": "limit", "value": "10" }] }
+          }
+        },
+        {
+          "name": "Featured Courses",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/courses/featured", "host": ["{{baseUrl}}"], "path": ["courses", "featured"] }
+          }
+        },
+        {
+          "name": "Recent Courses",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/courses/recent", "host": ["{{baseUrl}}"], "path": ["courses", "recent"] }
+          }
+        },
+        {
+          "name": "Premium Courses",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/courses/premium", "host": ["{{baseUrl}}"], "path": ["courses", "premium"] }
+          }
+        },
+        {
+          "name": "Course Details",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/courses/{{courseId}}", "host": ["{{baseUrl}}"], "path": ["courses", "{{courseId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mock Tests",
+      "item": [
+        {
+          "name": "Mock Test List",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/mock-tests?page=1&limit=10", "host": ["{{baseUrl}}"], "path": ["mock-tests"], "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "10" }] }
+          }
+        },
+        {
+          "name": "Free Mock Tests",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/mock-tests/free", "host": ["{{baseUrl}}"], "path": ["mock-tests", "free"] }
+          }
+        },
+        {
+          "name": "Premium Mock Tests",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/mock-tests/premium", "host": ["{{baseUrl}}"], "path": ["mock-tests", "premium"] }
+          }
+        },
+        {
+          "name": "Mock Test Categories",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/mock-tests/categories", "host": ["{{baseUrl}}"], "path": ["mock-tests", "categories"] }
+          }
+        },
+        {
+          "name": "Mock Test Details",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/mock-tests/{{mockTestId}}", "host": ["{{baseUrl}}"], "path": ["mock-tests", "{{mockTestId}}"] }
+          }
+        },
+        {
+          "name": "Get Questions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/mock-tests/{{mockTestId}}/questions", "host": ["{{baseUrl}}"], "path": ["mock-tests", "{{mockTestId}}", "questions"] }
+          }
+        },
+        {
+          "name": "Start Test",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/mock-tests/{{mockTestId}}/start", "host": ["{{baseUrl}}"], "path": ["mock-tests", "{{mockTestId}}", "start"] }
+          }
+        },
+        {
+          "name": "Save Answer",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"questionId\": \"{{questionId}}\",\n  \"selectedOptions\": [0],\n  \"timeSpent\": 30\n}" },
+            "url": { "raw": "{{baseUrl}}/mock-tests/sessions/{{sessionId}}/answer", "host": ["{{baseUrl}}"], "path": ["mock-tests", "sessions", "{{sessionId}}", "answer"] }
+          }
+        },
+        {
+          "name": "Session Timer",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/mock-tests/sessions/{{sessionId}}/timer", "host": ["{{baseUrl}}"], "path": ["mock-tests", "sessions", "{{sessionId}}", "timer"] }
+          }
+        },
+        {
+          "name": "Question Palette",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/mock-tests/sessions/{{sessionId}}/palette", "host": ["{{baseUrl}}"], "path": ["mock-tests", "sessions", "{{sessionId}}", "palette"] }
+          }
+        },
+        {
+          "name": "Submit Test",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/mock-tests/sessions/{{sessionId}}/submit", "host": ["{{baseUrl}}"], "path": ["mock-tests", "sessions", "{{sessionId}}", "submit"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Results",
+      "item": [
+        {
+          "name": "My Results",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/results/my", "host": ["{{baseUrl}}"], "path": ["results", "my"] }
+          }
+        },
+        {
+          "name": "Leaderboard",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/results/leaderboard/{{mockTestId}}", "host": ["{{baseUrl}}"], "path": ["results", "leaderboard", "{{mockTestId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/dashboard", "host": ["{{baseUrl}}"], "path": ["admin", "dashboard"] }
+          }
+        },
+        {
+          "name": "Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/users", "host": ["{{baseUrl}}"], "path": ["admin", "users"] }
+          }
+        },
+        {
+          "name": "Update User Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"isActive\": false\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/users/{{userId}}/status", "host": ["{{baseUrl}}"], "path": ["admin", "users", "{{userId}}", "status"] }
+          }
+        },
+        {
+          "name": "Teachers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/teachers", "host": ["{{baseUrl}}"], "path": ["admin", "teachers"] }
+          }
+        },
+        {
+          "name": "Create Teacher",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Prof. V. Kumar\",\n  \"specialization\": \"Mathematics\",\n  \"experience\": {\n    \"years\": 15,\n    \"summary\": \"JEE Advanced expert\"\n  },\n  \"studentsCount\": 15000,\n  \"profileImage\": \"https://example.com/teacher.jpg\",\n  \"bio\": \"Senior mathematics faculty\"\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/teachers", "host": ["{{baseUrl}}"], "path": ["admin", "teachers"] }
+          }
+        },
+        {
+          "name": "Update Teacher",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"specialization\": \"Physics\",\n  \"studentsCount\": 16000\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/teachers/{{teacherId}}", "host": ["{{baseUrl}}"], "path": ["admin", "teachers", "{{teacherId}}"] }
+          }
+        },
+        {
+          "name": "Courses",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/courses", "host": ["{{baseUrl}}"], "path": ["admin", "courses"] }
+          }
+        },
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Advanced Physics\",\n  \"slug\": \"advanced-physics\",\n  \"subject\": \"Physics\",\n  \"description\": \"Mechanics to Modern Physics\",\n  \"lessonsCount\": 120,\n  \"premiumStatus\": true,\n  \"featured\": true,\n  \"teacher\": \"{{teacherId}}\",\n  \"thumbnail\": \"https://example.com/course.jpg\",\n  \"tags\": [\"jee\", \"physics\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/courses", "host": ["{{baseUrl}}"], "path": ["admin", "courses"] }
+          }
+        },
+        {
+          "name": "Update Course",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"premiumStatus\": false,\n  \"featured\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/courses/{{courseId}}", "host": ["{{baseUrl}}"], "path": ["admin", "courses", "{{courseId}}"] }
+          }
+        },
+        {
+          "name": "Mock Tests",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/mock-tests", "host": ["{{baseUrl}}"], "path": ["admin", "mock-tests"] }
+          }
+        },
+        {
+          "name": "Create Mock Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"JEE Full Mock 1\",\n  \"subject\": \"Physics\",\n  \"duration\": 180,\n  \"totalQuestions\": 90,\n  \"difficulty\": \"hard\",\n  \"markingType\": -2.5,\n  \"premiumStatus\": false,\n  \"category\": \"JEE\",\n  \"featured\": true,\n  \"recent\": true,\n  \"instructions\": [\"Read each question carefully\", \"No calculator allowed\"]\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/mock-tests", "host": ["{{baseUrl}}"], "path": ["admin", "mock-tests"] }
+          }
+        },
+        {
+          "name": "Update Mock Test",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"premiumStatus\": true,\n  \"recent\": false\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/mock-tests/{{mockTestId}}", "host": ["{{baseUrl}}"], "path": ["admin", "mock-tests", "{{mockTestId}}"] }
+          }
+        },
+        {
+          "name": "Questions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+            "url": { "raw": "{{baseUrl}}/admin/questions", "host": ["{{baseUrl}}"], "path": ["admin", "questions"] }
+          }
+        },
+        {
+          "name": "Create Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"mockTest\": \"{{mockTestId}}\",\n  \"title\": \"What is the SI unit of force?\",\n  \"type\": \"single_correct\",\n  \"subject\": \"Physics\",\n  \"topic\": \"Units\",\n  \"options\": [\n    { \"text\": \"Newton\", \"image\": \"\" },\n    { \"text\": \"Joule\", \"image\": \"\" },\n    { \"text\": \"Pascal\", \"image\": \"\" },\n    { \"text\": \"Watt\", \"image\": \"\" }\n  ],\n  \"correctAnswers\": [0],\n  \"explanation\": \"Force is measured in Newtons.\",\n  \"positiveMarks\": 4,\n  \"negativeMarks\": -0.5,\n  \"order\": 1\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/questions", "host": ["{{baseUrl}}"], "path": ["admin", "questions"] }
+          }
+        },
+        {
+          "name": "Update Question",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"explanation\": \"Updated explanation\",\n  \"negativeMarks\": -2.5\n}" },
+            "url": { "raw": "{{baseUrl}}/admin/questions/{{questionId}}", "host": ["{{baseUrl}}"], "path": ["admin", "questions", "{{questionId}}"] }
+          }
+        }
+      ]
+    }
+  ]
+}
