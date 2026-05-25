@@ -23,11 +23,11 @@ const env = {
   firebasePrivateKey: process.env.FIREBASE_PRIVATE_KEY
     ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
     : "",
-  smtpHost: process.env.SMTP_HOST || "",
+  smtpHost: process.env.SMTP_HOST || "smtp.gmail.com",
   smtpPort: Number(process.env.SMTP_PORT || 587),
-  smtpUser: process.env.SMTP_USER || "",
-  smtpPass: process.env.SMTP_PASS || "",
-  smtpFrom: process.env.SMTP_FROM || ""
+  smtpUser: process.env.SMTP_USER || "pranabkumarbehera85@gmail.com",
+  smtpPass: process.env.SMTP_PASS || "abcd efgh ijkl mnop",
+  smtpFrom: process.env.SMTP_FROM || "\"Gyanodaya Support\" <pranabkumarbehera85@gmail.com>"
 };
 
 module.exports = env;
