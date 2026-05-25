@@ -12,7 +12,12 @@ const options = {
     },
     servers: [
       {
-        url: `http://localhost:${env.port}${env.apiPrefix}`
+        url: `http://localhost:${env.port}${env.apiPrefix}`,
+        description: "Local Development Server"
+      },
+      {
+        url: env.apiPrefix,
+        description: "Production Server (Relative)"
       }
     ],
     components: {
