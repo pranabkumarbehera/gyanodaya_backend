@@ -3,12 +3,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const env = {
-  // MONGO_URI=mongodb://admin:StrongPassword123@127.0.0.1:27017/gyanodaya?authSource=admin
-  MONGO_URI:process.env.MONGO_URI || "mongodb://admin:StrongPassword123@127.0.0.1:27017/gyanodaya?authSource=admin",
+  MONGO_URI: process.env.MONGO_URI || "mongodb+srv://admin:StrongPassword123@cluster0.sycvfbs.mongodb.net/gyanodaya?retryWrites=true&w=majority&appName=Cluster0",
   nodeEnv: process.env.NODE_ENV || "development",
   port: Number(process.env.PORT || 5002),
   apiPrefix: process.env.API_PREFIX || "/api/v1",
-  mongoUri:process.env.MONGO_URI || "mongodb://admin:StrongPassword123@127.0.0.1:27017/gyanodaya?authSource=admin",
+  mongoUri: process.env.MONGO_URI || "mongodb+srv://admin:StrongPassword123@cluster0.sycvfbs.mongodb.net/gyanodaya?retryWrites=true&w=majority&appName=Cluster0",
   accessSecret: process.env.JWT_ACCESS_SECRET || "access-secret",
   refreshSecret: process.env.JWT_REFRESH_SECRET || "refresh-secret",
   accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || "15m",
