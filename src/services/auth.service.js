@@ -9,6 +9,7 @@ const otpRepository = require("../repositories/otp.repository");
 const refreshTokenRepository = require("../repositories/refresh-token.repository");
 const userRepository = require("../repositories/user.repository");
 const { ROLES } = require("../constants/enums");
+const emailService = require("./email.service");
 
 const googleClient = new OAuth2Client(env.googleClientId || undefined);
 
@@ -85,6 +86,11 @@ class AuthService {
       email,
       otp,
       expiresAt: new Date(Date.now() + 10 * 60 * 1000)
+    });
+
+    // Dispatch email asynchronously so it doesn't block the API response
+    emailService.sendOtpEmail(email, otp).catch((err) => {
+      console.error("[AuthService] Background email dispatch failed:", err);
     });
 
     return {

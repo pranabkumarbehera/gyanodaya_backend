@@ -22,7 +22,12 @@ const env = {
   firebaseClientEmail: process.env.FIREBASE_CLIENT_EMAIL || "",
   firebasePrivateKey: process.env.FIREBASE_PRIVATE_KEY
     ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
-    : ""
+    : "",
+  smtpHost: process.env.SMTP_HOST || "",
+  smtpPort: Number(process.env.SMTP_PORT || 587),
+  smtpUser: process.env.SMTP_USER || "",
+  smtpPass: process.env.SMTP_PASS || "",
+  smtpFrom: process.env.SMTP_FROM || ""
 };
 
 module.exports = env;
